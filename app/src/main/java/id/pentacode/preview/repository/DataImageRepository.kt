@@ -1,11 +1,12 @@
 package id.pentacode.preview.repository
 
 import android.app.Application
-import androidx.lifecycle.LiveData
+import android.util.Log
 import androidx.paging.DataSource
 import id.pentacode.preview.Helper.Async
 import id.pentacode.preview.db.db_preview
 import id.pentacode.preview.db.entity.DataAllImage
+import org.jetbrains.anko.doAsync
 
 class DataImageRepository(application: Application) {
     val db = db_preview.getInstance(application)
@@ -13,35 +14,51 @@ class DataImageRepository(application: Application) {
     val list = dataImageDao.getListUsers()
 
 
-    fun insert(dataImage: DataAllImage){
-
-            dataImageDao.insert(dataImage)
+    fun insert(dataImage: DataAllImage) {
+Async {
+    dataImageDao.insert(dataImage)
+}
 
     }
-    fun update(dataImage:  List<DataAllImage>){
-        Async{
+
+    fun update(dataImage: DataAllImage) {
+        Async {
             dataImageDao.update(dataImage)
         }
     }
-    fun delete(dataImage: DataAllImage){
+
+    fun updatePosition(newId: ArrayList<Int>, oldId: ArrayList<Int>){
         Async{
+                dataImageDao.updateByPos(newId, oldId)
+        }
+    }
+
+    fun delete(dataImage: DataAllImage) {
+        Async {
             dataImageDao.delete(dataImage)
 
         }
-
-
     }
-    fun deleteById(id: Int){
-        Async{
+    fun getDataById(id: Int): DataAllImage{
+        return dataImageDao.getDataById(id)
+    }
+
+    fun deleteById(id: Int) {
+
             dataImageDao.deleteById(id)
-        }
+
     }
 
-    fun updateAll(list: List<DataAllImage>){
-        Async{
-            dataImageDao.updateAll(list)
-        }
+    fun updateAll(list: List<DataAllImage>): Int {
 
+         var a =   dataImageDao.updateAll(list)
+        return  a
+    }
+
+    fun updateMultipleData(list: ArrayList<DataAllImage>){
+        Async{
+            dataImageDao.upsert(list)
+        }
     }
 
 //    fun updateById(id: Int, name: String, email: String){
@@ -50,14 +67,11 @@ class DataImageRepository(application: Application) {
 //        }
 //    }
 
-    fun getAllImage(): DataSource.Factory<Int, DataAllImage>{
+
+    fun getAllsImage(userId: Int): List<Int> {
+        var list = dataImageDao.getlistUsersAll(userId)
         return list
     }
-
-    fun getAllsImage():List<DataAllImage>{
-        return dataImageDao.getlistUsersAll()
-    }
-
 
 
 }

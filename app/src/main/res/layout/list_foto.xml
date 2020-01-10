@@ -2,12 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="130dp"
-    android:layout_height="130dp">
+    android:orientation="vertical" android:layout_width="@dimen/_101sdp"
+    android:layout_height="@dimen/_101sdp">
 
     <ImageView
         android:id="@+id/imageView"
-        android:scaleType="fitXY"
+        android:scaleType="centerCrop"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:srcCompat="@mipmap/ic_launcher" />

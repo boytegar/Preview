@@ -1,7 +1,6 @@
 package id.pentacode.preview.Helper
 
-import androidx.recyclerview.widget.RecyclerView
-import id.pentacode.preview.FotoAdapter
+
 import id.pentacode.preview.FotoAdapterNew
 
 
@@ -13,13 +12,8 @@ interface OnStartDragListener {
 
 
 interface ItemTouchHelperAdapter {
-
-    fun onItemMove(fromPosition: Int, toPosition: Int): Boolean
-
-    fun onItemDismiss(position: Int)
-
-    fun onItemSelected(viewHolder : FotoAdapterNew.PersonViewHolder)
-
-    fun onItemClear(viewHolder : FotoAdapterNew.PersonViewHolder)
-   // fun clearView( recyclerView: RecyclerView,  viewHolder : RecyclerView.ViewHolder)
+    fun onBindViewHolder(holder: FotoAdapterNew.PersonViewHolder, position: Int)
+    fun onRowMoved(fromPosition: Int, toPosition: Int)
+    fun onRowSelected(myViewHolder: FotoAdapterNew.PersonViewHolder)
+    fun onRowClear(myViewHolder: FotoAdapterNew.PersonViewHolder)
 }

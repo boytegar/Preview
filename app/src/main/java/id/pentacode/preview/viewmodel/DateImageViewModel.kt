@@ -12,9 +12,9 @@ import id.pentacode.preview.repository.DateImageRepository
 class DateImageViewModel (application: Application): AndroidViewModel(application){
     private val dateImageRepository = DateImageRepository(application)
 
-    fun getPersonsLiveData():List<DateImage> {
-       return dateImageRepository.getAllImage()
-    }
+//    fun getPersonsLiveData():List<DateImage> {
+//       return dateImageRepository.getAllImage()
+//    }
     fun insert(dataImage: DateImage){
         dateImageRepository.insert(dataImage)
     }

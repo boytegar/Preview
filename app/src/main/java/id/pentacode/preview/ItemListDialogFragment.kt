@@ -11,6 +11,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import kotlinx.android.synthetic.main.fragment_item_list_dialog.*
 import kotlinx.android.synthetic.main.fragment_item_list_dialog_item.view.*
+import android.animation.AnimatorListenerAdapter
+import android.view.animation.AccelerateDecelerateInterpolator
+import androidx.core.view.ViewCompat.animate
+
+
 
 
 

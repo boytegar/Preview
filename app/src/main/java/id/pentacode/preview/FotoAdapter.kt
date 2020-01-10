@@ -21,6 +21,9 @@ import id.pentacode.preview.db.entity.DateImage
 import id.pentacode.preview.viewmodel.DataImageViewModel
 import java.util.Collections.swap
 import kotlin.collections.ArrayList
+import androidx.recyclerview.widget.ItemTouchHelper
+
+
 
 
 class FotoAdapter(
@@ -29,45 +32,9 @@ class FotoAdapter(
     val it: List<DateImage>,
     val dragListener: OnStartDragListener,
     val viewModel: DataImageViewModel
-) : PagedListAdapter<DataAllImage, FotoAdapter.PersonViewHolder>(DataImageCallback()), ItemTouchHelperAdapter {
+) : PagedListAdapter<DataAllImage, FotoAdapter.PersonViewHolder>(DataImageCallback()){
 
-   var list = ArrayList<DataAllImage>()
-
-    override fun onItemMove(fromPosition: Int, toPosition: Int): Boolean {
-        if (fromPosition < list.size && toPosition < list.size) {
-            if (fromPosition < toPosition) {
-                for (i in fromPosition until toPosition) {
-                    swap(list, i, i + 1)
-
-                    val order1 = list[i]
-                    val order2 = list[i + 1]
-                    list[i] = order1
-                    list[i + 1] = order2
-                }
-            } else {
-                for (i in fromPosition downTo toPosition + 1) {
-                    swap(list, i, i - 1)
-
-                    val order1 = list[i]
-                    val order2 = list[i - 1]
-                    list[i] = order1
-                    list[i - 1] = order2
-                }
-            }
-            notifyItemMoved(fromPosition, toPosition)
-
-        }
-        return true
-    }
-
-//    override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
-//      //  viewModel.updateAll(list as List<DataAllImage>)
-//    }
-
-    override fun onItemDismiss(position: Int) {
-        list.removeAt(position)
-        notifyItemRemoved(position)
-    }
+    var list = ArrayList<DataAllImage>()
 
 
     override fun submitList(pagedList: PagedList<DataAllImage>?) {
@@ -76,7 +43,7 @@ class FotoAdapter(
             val data = DataAllImage()
             data.id = pagedList[i]!!.id
             data.image = pagedList[i]!!.image
-            data.group_id = pagedList[i]!!.group_id
+            data.user_id = pagedList[i]!!.user_id
             data.caption = pagedList[i]!!.caption
             data.path = pagedList[i]!!.path
             list.add(data)
@@ -90,26 +57,8 @@ class FotoAdapter(
     override fun onBindViewHolder(holderPerson: PersonViewHolder, position: Int) {
         var person = getItem(position)
         var date = it[position]
-        if (person == null) {
-            holderPerson.clear()
-        } else {
-            holderPerson.bind(person, date)
-        }
+            holderPerson.bind(person!!, date)
 
-//        holderPerson.image_view.setOnLongClickListener {
-//
-//                dragListener.onStartDrag(holderPerson!!)
-//
-//            return@setOnLongClickListener false
-//        }
-
-//        holderPerson.image_view.setOnTouchListener { v, event ->
-//
-//            v.onTouchEvent(event)
-//            // We're only interested in when the button is released.
-//
-//            return@setonLong false
-//        }
     }
 
 
@@ -136,22 +85,9 @@ class FotoAdapter(
             txt_date.text = date.time
             txt_day.text = date.day
 
-//            image_view.setOnLongClickListener {
-//                image_view.setPadding(25, 25, 25, 25)
-//                return@setOnLongClickListener true
-//            }
-
-
-
             Glide.with(context)
                     .load(decodedByte)
                     .into(image_view)
-        }
-
-        fun clear() {
-            //   tvName.text = null
-
-
         }
 
     }
